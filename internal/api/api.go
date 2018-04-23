@@ -197,11 +197,7 @@ func newReadingsHandler(db *bolt.DB) gin.HandlerFunc {
 			}
 			/* Bucket to hold all the readings, key is the timestamp */
 			rdBkt := tx.Bucket([]byte("readings"))
-			if rdErr := rdBkt.Put([]byte(now), encoded); rdErr != nil {
-				return rdErr
-			}
-
-			return nil
+			return rdBkt.Put([]byte(now), encoded)
 		})
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
